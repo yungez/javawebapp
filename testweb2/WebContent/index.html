@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="no-js hasSidebar hasPageActions hasBreadcrumb " lang="en-us" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:title" content="Introduction to Azure Storage">
+	<meta property="og:image" content="https://docs.microsoft.com/_themes/docs.theme/master/en-us/_themes/images/microsoft-header.png">
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@docsmsft">
+	<meta name="twitter:title" content="Introduction to Azure Storage">
+	<meta name="twitter:description" content="An overview of Azure Storage, Microsoft's online data storage in the cloud. Learn how to use the best available cloud storage solution in your applications.">
+	<meta name="twitter:image" content="https://docs.microsoft.com/_themes/docs.theme/master/en-us/_themes/images/microsoft-header.png">
+	<meta name="twitter:image:alt" content="Microsoft Logo">
+
+		<meta name="breadcrumb_path" content="/azure/bread/toc.json">
+<meta name="ms.devlang" content="na">
+<meta name="ms.tgt_pltfrm" content="na">
+<meta name="ms.assetid" content="a4a1bc58-ea14-4bf5-b040-f85114edc1f1">
+<meta name="author" content="mmacy">
+<meta name="editor" content="tysonn">
+<meta name="description" content="An overview of Azure Storage, Microsoft&#39;s online data storage in the cloud. Learn how to use the best available cloud storage solution in your applications.">
+<meta name="ms.author" content="marsma">
+<meta name="manager" content="timlt">
+<meta name="documentationcenter" content="">
+<meta name="ms.topic" content="get-started-article">
+<meta name="services" content="storage">
+<meta name="ms.service" content="storage">
+<meta name="ms.date" content="02/24/2017">
+<meta name="ms.workload" content="storage">
+<meta name="search.ms_sitename" content="Docs">
+<meta name="search.ms_docsetname" content="azure-documents">
+<meta name="version" content="0">
+<meta name="locale" content="en-us">
+<meta name="site_name" content="Docs">
+<meta name="search.ms_product" content="Azure">
+<meta name="depot_name" content="Azure.azure-documents">
+<meta name="updated_at" content="2017-02-27 06:14 PM">
+<meta name="gitcommit" content="https://github.com/Microsoft/azure-docs-pr/blob/f4b26aa9a4dd110eafb8f9f8d658cc0f530136ec/articles/storage/storage-introduction.md">
+<meta name="original_content_git_url" content="https://github.com/Microsoft/azure-docs-pr/blob/live/articles/storage/storage-introduction.md">
+<meta name="document_id" content="312ba22f-685c-d17f-438f-9656f019012a">
+<meta name="pagetype" content="Conceptual">
+<meta name="toc_rel" content="TOC.json">
+<meta name="pdf_url_template" content="https://docs.microsoft.com/pdfstore/en-us/Azure.azure-documents/{branchName}{pdfName}">
+
+	<meta name="scope" content="Azure">
+<link href="https://docs.microsoft.com/en-us/azure/storage/storage-introduction" rel="canonical">
+	<title>Introduction to Azure Storage | Microsoft Docs</title>
+
+	<link rel="stylesheet" href="../_themes/css/81fdb4f4b70b2154ebdd.site.css ">
+	<link rel="stylesheet" href="../_themes/css/81fdb4f4b70b2154ebdd.conceptual.css ">
+
+	<link rel="stylesheet" href="../_themes/global/css/azureHeader.css?v=4">
+	<link rel="stylesheet" href="https://azure.microsoft.com/en-us/asset/menucss/">
+	<script>
+	var msDocs = {
+		data:{
+			contentLocale: 'en-us',
+			contentDir: 'ltr',
+			pathToTheme: '../_themes/',
+			brand : 'azure'
+		},
+		functions:{},
+		settings:{
+			extendBreadcrumb: false
+		}
+	};
+	if (!('Promise' in window && 'resolve' in window.Promise && 'reject' in window.Promise && 'all' in window.Promise && 'race' in window.Promise)) {
+		document.write('<script src="../_themes/global/js/bluebird.min.js"><\/script>');
+	}
+	</script>
+
+	<!--[if lt IE 9]>
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+		<script src="../_themes/global/js/polyfills/all.js"></script>
+<script src="../_themes/global/js/azureHeader/respond_and_ie8Setup_combine.js"></script>	<![endif]-->
+	<!--[if gte IE 9]><!-->
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
+	<!--<![endif]-->
+	<script>window.jQuery || document.write('<script src="../_themes/global/js/jquery/jquery-1.12.4.min.js"><\/script>')</script>	
+	<script src="../_themes/global/js/global.min.js?v=34"></script>
+	<script src="../_themes/global/js/azureHeader/loader.js?v=4"></script>
+</head>
+
+<body>
+
+	<div id="lca-cookie-notification" class="container cookieContainer shell-notification-holder" style="display:none;">
+		<div class="shell-notification cookieNotification">
+			<div class="shell-notification-grid-row shell-notification-clearfix">
+				<span id="cookie.consent.europe" class="notification-txt"></span>
+				<span class="notification-action">
+				<a id="privacystatement-link" tabindex="1" href="#" data-linktype="relative-path"></a>
+				<a id="cookie-notification-close" tabindex="2">
+					<i class="shell-icon-close"></i>
+				</a>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div id="headerArea" class="az_h default" ms.pgarea="header">
+		<div class="azure-header_holder">	
+			<div class="azure-header">	
+				<header class="azure-header_temp">
+					<div class="row column">
+						<a href="https://azure.microsoft.com/en-us/" class="logo" title="Microsoft Azure" data-linktype="external">
+							<svg x="0px" y="0px" width="165px" height="20px" viewbox="0 0 165 20">
+							<path fill="#29A5DE" d="M18,19H16V7.1C16,6.2,16,5,16.1,3.7h0c-0.2,0.8-0.4,1.4-0.5,1.7L9.5,19h-1l-6-13.5c-0.2-0.4-0.3-1-0.5-1.8
+							h0C2,4.4,2,5.5,2,7.1V19H0V1.3h2.7l5.4,12.3c0.4,0.9,0.7,1.7,0.8,2.1H9c0.4-1,0.6-1.7,0.9-2.2l5.5-12.3H18V19z"></path>
+							<path fill="#29A5DE" d="M22.8,3.1c-0.4,0-0.7-0.1-0.9-0.4s-0.4-0.6-0.4-0.9s0.1-0.7,0.4-0.9c0.3-0.3,0.6-0.4,0.9-0.4
+							c0.4,0,0.7,0.1,0.9,0.4c0.3,0.3,0.4,0.6,0.4,0.9c0,0.4-0.1,0.7-0.4,0.9C23.5,3,23.2,3.1,22.8,3.1z M23.8,19h-2V6.3h2V19z"></path>
+							<path fill="#29A5DE" d="M35.8,18.4c-1,0.6-2.1,0.9-3.5,0.9c-1.8,0-3.3-0.6-4.4-1.8c-1.1-1.2-1.7-2.7-1.7-4.6c0-2.1,0.6-3.7,1.8-5
+							C29.4,6.7,30.9,6,32.9,6C34,6,35,6.2,35.9,6.7v2.1c-0.9-0.7-1.9-1-3-1c-1.3,0-2.3,0.5-3.2,1.4c-0.8,0.9-1.2,2.1-1.2,3.6
+							c0,1.5,0.4,2.6,1.2,3.5c0.8,0.9,1.8,1.3,3.1,1.3c1.1,0,2.1-0.4,3.1-1.1V18.4z"></path>
+							<path fill="#29A5DE" d="M44.9,8.4C44.5,8.1,44,8,43.3,8c-0.9,0-1.6,0.4-2.2,1.2c-0.6,0.8-0.9,1.9-0.9,3.3V19h-2V6.3h2v2.6h0
+							c0.3-0.9,0.7-1.6,1.3-2.1c0.6-0.5,1.3-0.7,2-0.7c0.5,0,0.9,0.1,1.2,0.2V8.4z"></path>
+							<path fill="#29A5DE" d="M51.4,19.3c-1.9,0-3.4-0.6-4.5-1.8c-1.1-1.2-1.7-2.7-1.7-4.7c0-2.1,0.6-3.8,1.7-5S49.7,6,51.7,6
+							c1.9,0,3.4,0.6,4.4,1.7c1.1,1.2,1.6,2.8,1.6,4.8c0,2-0.6,3.6-1.7,4.8C54.8,18.6,53.3,19.3,51.4,19.3z M51.5,7.7
+							c-1.3,0-2.3,0.4-3.1,1.3c-0.8,0.9-1.1,2.1-1.1,3.7c0,1.5,0.4,2.7,1.1,3.5c0.8,0.9,1.8,1.3,3.1,1.3c1.3,0,2.3-0.4,3-1.3
+							c0.7-0.8,1.1-2,1.1-3.6c0-1.6-0.4-2.8-1.1-3.6C53.8,8.2,52.8,7.7,51.5,7.7z"></path>
+							<path fill="#29A5DE" d="M59.5,18.5v-2.2c1.1,0.8,2.3,1.2,3.6,1.2c1.8,0,2.7-0.6,2.7-1.8c0-0.3-0.1-0.6-0.2-0.9
+							c-0.2-0.2-0.4-0.4-0.6-0.6c-0.3-0.2-0.6-0.3-0.9-0.5c-0.3-0.1-0.7-0.3-1.1-0.4c-0.6-0.2-1-0.4-1.5-0.7c-0.4-0.2-0.8-0.5-1.1-0.8
+							c-0.3-0.3-0.5-0.6-0.6-1c-0.1-0.4-0.2-0.8-0.2-1.3c0-0.6,0.1-1.1,0.4-1.6C60.2,7.7,60.5,7.3,61,7c0.5-0.3,1-0.5,1.5-0.7
+							C63.1,6.1,63.7,6,64.3,6c1.1,0,2.1,0.2,2.9,0.6v2c-0.9-0.6-2-0.9-3.2-0.9c-0.4,0-0.7,0-1,0.1c-0.3,0.1-0.6,0.2-0.8,0.4
+							c-0.2,0.2-0.4,0.3-0.5,0.6c-0.1,0.2-0.2,0.5-0.2,0.7c0,0.3,0.1,0.6,0.2,0.8c0.1,0.2,0.3,0.4,0.5,0.6c0.2,0.2,0.5,0.3,0.8,0.5
+							c0.3,0.1,0.7,0.3,1.1,0.5c0.6,0.2,1.1,0.4,1.5,0.7c0.4,0.2,0.8,0.5,1.1,0.8c0.3,0.3,0.6,0.6,0.7,1c0.2,0.4,0.3,0.8,0.3,1.3
+							c0,0.6-0.1,1.2-0.4,1.6c-0.3,0.5-0.6,0.8-1.1,1.1c-0.5,0.3-1,0.5-1.6,0.7c-0.6,0.1-1.2,0.2-1.9,0.2C61.6,19.3,60.4,19,59.5,18.5z"></path>
+							<path fill="#29A5DE" d="M75.6,19.3c-1.9,0-3.4-0.6-4.5-1.8c-1.1-1.2-1.7-2.7-1.7-4.7c0-2.1,0.6-3.8,1.7-5C72.4,6.6,73.9,6,75.9,6
+							c1.9,0,3.4,0.6,4.4,1.7c1.1,1.2,1.6,2.8,1.6,4.8c0,2-0.6,3.6-1.7,4.8C79,18.6,77.5,19.3,75.6,19.3z M75.7,7.7
+							c-1.3,0-2.3,0.4-3.1,1.3c-0.8,0.9-1.1,2.1-1.1,3.7c0,1.5,0.4,2.7,1.1,3.5c0.8,0.9,1.8,1.3,3.1,1.3c1.3,0,2.3-0.4,3-1.3
+							c0.7-0.8,1.1-2,1.1-3.6c0-1.6-0.4-2.8-1.1-3.6C78.1,8.2,77,7.7,75.7,7.7z"></path>
+							<path fill="#29A5DE" d="M97.6,8.1V6.3h-3.2V2.6l-2,0.7v3.1h-2.6h-1.5h-1.4V4.4c0-1.8,0.7-2.7,2.1-2.7c0.5,0,0.9,0.1,1.3,0.3V0.2
+							C89.9,0.1,89.4,0,88.8,0c-1.1,0-2.1,0.4-2.9,1.2c-0.8,0.8-1.1,1.8-1.1,3.1v2h-2.2v1.7h2.2V19h2V8.1h1.4h1.5h2.6v7.5
+							c0,2.5,1.1,3.7,3.3,3.7c0.8,0,1.4-0.1,1.9-0.4v-1.7c-0.4,0.3-0.8,0.4-1.3,0.4c-0.7,0-1.1-0.2-1.4-0.5c-0.3-0.4-0.4-1-0.4-1.8V8.1
+							H97.6z"></path>
+							<path fill="#29A5DE" d="M119.9,19h-2.3l-1.9-5h-7.5l-1.8,5h-2.3L111,1.3h2.1L119.9,19z M115.1,12.1l-2.8-7.5
+							c-0.1-0.2-0.2-0.6-0.3-1.2h0c-0.1,0.5-0.2,0.9-0.3,1.2l-2.7,7.5H115.1z"></path>
+							<path fill="#29A5DE" d="M130.4,6.9l-7.5,10.3h7.4V19H120v-0.6l7.5-10.3h-6.8V6.3h9.7V6.9z"></path>
+							<path fill="#29A5DE" d="M142.6,19h-2v-2h0c-0.8,1.5-2.1,2.3-3.9,2.3c-3,0-4.5-1.8-4.5-5.4V6.3h2v7.2c0,2.7,1,4,3.1,4
+							c1,0,1.8-0.4,2.4-1.1c0.6-0.7,1-1.7,1-2.9V6.3h2V19z"></path>
+							<path fill="#29A5DE" d="M152.6,8.4c-0.4-0.3-0.9-0.4-1.5-0.4c-0.9,0-1.6,0.4-2.2,1.2c-0.6,0.8-0.9,1.9-0.9,3.3V19h-2V6.3h2v2.6h0
+							c0.3-0.9,0.7-1.6,1.3-2.1c0.6-0.5,1.3-0.7,2-0.7c0.5,0,0.9,0.1,1.2,0.2V8.4z"></path>
+							<path fill="#29A5DE" d="M164,13.1h-8.9c0,1.4,0.4,2.5,1.1,3.3c0.7,0.8,1.7,1.1,3,1.1c1.4,0,2.7-0.5,3.9-1.4V18
+							c-1.1,0.8-2.6,1.2-4.4,1.2c-1.8,0-3.2-0.6-4.2-1.7c-1-1.1-1.5-2.8-1.5-4.8c0-2,0.6-3.6,1.7-4.8c1.1-1.2,2.5-1.9,4.1-1.9
+							s2.9,0.5,3.8,1.6s1.4,2.6,1.4,4.4V13.1z M161.9,11.4c0-1.2-0.3-2.1-0.8-2.7c-0.6-0.6-1.3-1-2.3-1c-1,0-1.8,0.3-2.4,1
+							c-0.7,0.7-1.1,1.6-1.2,2.7H161.9z"></path>
+							</svg>
+						</a>
+						<a href="#" class="small-search" onclick="return false" data-linktype="relative-path"><span class="icon icon-search"></span></a>
+					</div>
+				</header>
+			</div>
+		</div>
+	</div>
+
+	<div class="container mainContainer" lang="en-us" dir="ltr">
+		<main role="main" ms.pgarea="body">
+				<div id="main" ms.cmpgrp="content">
+
+
+
+						<h1 id="introduction-to-microsoft-azure-storage" sourcefile="articles/storage/storage-introduction.md" sourcestartlinenumber="20" sourceendlinenumber="20">Introduction to Microsoft Azure Storage</h1>
+						<div class="metadata loading" ms.cmpgrp="page info">
+							<div>
+								<time class="date" datetime="2/24/2017 12:00:00 AM">2017-2-24</time>
+								<span class="reading-time">19 min to read</span>
+									<span class="contributors-text">Contributors</span>
+									<ul class="contributors" ms.cmpgrp="contributors">
+
+
+												<li><a href="https://github.com/mmacy" title="Marsh Macy" ms.cmpnm="contributorprofile" data-linktype="external"><img src="https://github.com/mmacy.png?size=16" alt="Marsh Macy" data-linktype="external"></a></li>
+
+												<li><a href="https://github.com/sdwheeler" title="Sean Wheeler" ms.cmpnm="contributorprofile" data-linktype="external"><img src="https://github.com/sdwheeler.png?size=16" alt="Sean Wheeler" data-linktype="external"></a></li>
+
+												<li><a href="https://github.com/tamram" title="Tamra Myers" ms.cmpnm="contributorprofile" data-linktype="external"><img src="https://github.com/tamram.png?size=16" alt="Tamra Myers" data-linktype="external"></a></li>
+
+												<li><a href="https://github.com/DarylsCorner" title="Daryl Harrington" ms.cmpnm="contributorprofile" data-linktype="external"><img src="https://github.com/DarylsCorner.png?size=16" alt="Daryl Harrington" data-linktype="external"></a></li>
+
+												<li><a href="https://github.com/TomArcher" title="Tom Archer" ms.cmpnm="contributorprofile" data-linktype="external"><img src="https://github.com/TomArcher.png?size=16" alt="Tom Archer" data-linktype="external"></a></li>
+											<li><a href="https://github.com/Microsoft/azure-docs/blob/master/articles/storage/storage-introduction.md" ms.cmpnm="contributorshowall" data-linktype="external">all</a></li>
+
+									</ul>
+							</div>
+
+
+							<nav id="center-doc-outline" class="doc-outline" ms.cmpgrp="intopic toc" role="navigation" aria-label="On page navigation">
+								<h3>In this article</h3>
+							</nav>
+
+						</div>
+
+						<div><div class="content">
+<h2 id="overview">Overview</h2>
+<p>Azure Storage is the cloud storage solution for modern applications that rely on durability, availability, and scalability to meet the needs of their customers. By reading this article, developers, IT Pros, and business decision makers can learn about:</p>
+<ul>
+<li>What Azure Storage is, and how you can take advantage of it in your cloud, mobile, server, and desktop applications</li>
+<li>What kinds of data you can store with the Azure Storage services: blob (object) data, NoSQL table data, queue messages, and file shares.</li>
+<li>How access to your data in Azure Storage is managed</li>
+<li>How your Azure Storage data is made durable via redundancy and replication</li>
+<li>Where to go next to build your first Azure Storage application</li>
+</ul>
+<p>To get up and running with Azure Storage quickly, see <a href="storage-getting-started-guide" data-linktype="relative-path">Get started with Azure Storage in five minutes</a>.</p>
+<p>For details on tools, libraries, and other resources for working with Azure Storage, see <a href="#next-steps" data-linktype="self-bookmark">Next Steps</a> below.</p>
+<h2 id="what-is-azure-storage">What is Azure Storage?</h2>
+<p>Cloud computing enables new scenarios for applications requiring scalable, durable, and highly available storage for their data – which is exactly why Microsoft developed Azure Storage. In addition to making it possible for developers to build large-scale applications to support new scenarios, Azure Storage also provides the storage foundation for Azure Virtual Machines, a further testament to its robustness.</p>
+<p>Azure Storage is massively scalable, so you can store and process hundreds of terabytes of data to support the big data scenarios required by scientific, financial analysis, and media applications. Or you can store the small amounts of data required for a small business website. Wherever your needs fall, you pay only for the data you’re storing. Azure Storage currently stores tens of trillions of unique customer objects, and handles millions of requests per second on average.</p>
+<p>Azure Storage is elastic, so you can design applications for a large global audience, and scale those applications as needed - both in terms of the amount of data stored and the number of requests made against it. You pay only for what you use, and only when you use it.</p>
+<p>Azure Storage uses an auto-partitioning system that automatically load-balances your data based on traffic. This means that as the demands on your application grow, Azure Storage automatically allocates the appropriate resources to meet them.</p>
+<p>Azure Storage is accessible from anywhere in the world, from any type of application, whether it’s running in the cloud, on the desktop, on an on-premises server, or on a mobile or tablet device. You can use Azure Storage in mobile scenarios where the application stores a subset of data on the device and synchronizes it with a full set of data stored in the cloud.</p>
+<p>Azure Storage supports clients using a diverse set of operating systems (including Windows and Linux) and a variety of programming languages (including .NET, Java, Node.js, Python, Ruby, PHP and C++ and mobile programming languages) for convenient development. Azure Storage also exposes data resources via simple REST APIs, which are available to any client capable of sending and receiving data via HTTP/HTTPS.</p>
+<p>Azure Premium Storage delivers high-performance, low-latency disk support for I/O intensive workloads running on Azure Virtual Machines. With Azure Premium Storage, you can attach multiple persistent data disks to a virtual machine and configure them to meet your performance requirements. Each data disk is backed by an SSD disk in Azure Premium Storage for maximum I/O performance. See <a href="storage-premium-storage" data-linktype="relative-path">Premium Storage: High-Performance Storage for Azure Virtual Machine Workloads</a> for more details.</p>
+<h2 id="introducing-the-azure-storage-services">Introducing the Azure Storage services</h2>
+<p>Azure storage provides the following four services: Blob storage, Table storage, Queue storage, and File storage.</p>
+<ul>
+<li>Blob Storage stores unstructured object data. A blob can be any type of text or binary data, such as a document, media file, or application installer. Blob storage is also referred to as Object storage.</li>
+<li>Table Storage stores structured datasets. Table storage is a NoSQL key-attribute data store, which allows for rapid development and fast access to large quantities of data.</li>
+<li>Queue Storage provides reliable messaging for workflow processing and for communication between components of cloud services.</li>
+<li>File Storage offers shared storage for legacy applications using the standard SMB protocol. Azure virtual machines and cloud services can share file data across application components via mounted shares, and on-premises applications can access file data in a share via the File service REST API.</li>
+</ul>
+<p>An Azure storage account is a secure account that gives you access to services in Azure Storage. Your storage account provides the unique namespace for your storage resources. The image below shows the relationships between the Azure storage resources in a storage account:</p>
+<p><img src="media/storage-introduction/storage-concepts.png" alt="Azure Storage Resources" data-linktype="relative-path"></p>
+<p>There are two types of storage accounts:</p>
+<h3 id="general-purpose-storage-accounts">General-purpose Storage Accounts</h3>
+<p>A general-purpose storage account gives you access to Azure Storage services such as Tables, Queues, Files, Blobs and Azure virtual machine disks under a single account. This type of storage account has two performance tiers:</p>
+<ul>
+<li>A standard storage performance tier which allows you to store Tables, Queues, Files, Blobs and Azure virtual machine disks.</li>
+<li>A premium storage performance tier which currently only supports Azure virtual machine disks. See <a href="storage-premium-storage" data-linktype="relative-path">Premium Storage: High-Performance Storage for Azure Virtual Machine Workloads</a> for an in-depth overview of Premium storage.</li>
+</ul>
+<h3 id="blob-storage-accounts">Blob Storage Accounts</h3>
+<p>A Blob storage account is a specialized storage account for storing your unstructured data as blobs (objects) in Azure Storage. Blob storage accounts are similar to your existing general-purpose storage accounts and share all the great durability, availability, scalability, and performance features that you use today including 100% API consistency for block blobs and append blobs. For applications requiring only block or append blob storage, we recommend using Blob storage accounts.</p>
+<div class="NOTE"><h5>Note</h5><p>Blob storage accounts support only block and append blobs, and not page blobs.</p>
+</div>
+<p>Blob storage accounts expose the <strong>Access Tier</strong> attribute which can be specified during account creation and modified later as needed. There are two types of access tiers that can be specified based on your data access pattern:</p>
+<ul>
+<li>A <strong>Hot</strong> access tier which indicates that the objects in the storage account will be more frequently accessed. This allows you to store data at a lower access cost.</li>
+<li>A <strong>Cool</strong> access tier which indicates that the objects in the storage account will be less frequently accessed. This allows you to store data at a lower data storage cost.</li>
+</ul>
+<p>If there is a change in the usage pattern of your data, you can also switch between these access tiers at any time. Changing the access tier may result in additional charges. Please see <a href="storage-blob-storage-tiers#pricing-and-billing" data-linktype="relative-path">Pricing and billing for Blob storage accounts</a> for more details.</p>
+<p>For more details on Blob storage accounts, see <a href="storage-blob-storage-tiers" data-linktype="relative-path">Azure Blob Storage: Cool and Hot tiers</a>.</p>
+<p>Before you can create a storage account, you must have an Azure subscription, which is a plan that gives you access to a variety of Azure services. You can get started with Azure with a <a href="https://azure.microsoft.com/pricing/free-trial/" data-linktype="external">free account</a>. Once you decide to purchase a subscription plan, you can choose from a variety of <a href="https://azure.microsoft.com/pricing/purchase-options/" data-linktype="external">purchase options</a>. If you’re an <a href="https://azure.microsoft.com/pricing/member-offers/msdn-benefits-details/" data-linktype="external">MSDN subscriber</a>, you get free monthly credits that you can use with Azure services, including Azure Storage. See <a href="https://azure.microsoft.com/pricing/details/storage/" data-linktype="external">Azure Storage Pricing </a> for information on volume pricing.</p>
+<p>To learn how to create a storage account, see <a href="storage-create-storage-account#create-a-storage-account" data-linktype="relative-path">Create a storage account</a> for more details. You can create up to 100 uniquely named storage accounts with a single subscription. See <a href="storage-scalability-targets" data-linktype="relative-path">Azure Storage Scalability and Performance Targets</a> for details about storage account limits.</p>
+<h3 id="storage-service-versions">Storage Service Versions</h3>
+<p>The Azure Storage services are regularly updated with support for new features. The Azure Storage services REST API reference describes each supported version and its features. We recommend that you use the latest version whenever possible. For information on the latest version of the Azure Storage services, as well as information on previous versions, see <a href="https://msdn.microsoft.com/library/azure/dd894041.aspx" data-linktype="external">Versioning for the Azure Storage Services</a>.  </p>
+<h2 id="blob-storage">Blob storage</h2>
+<p>For users with large amounts of unstructured object data to store in the cloud, Blob storage offers a cost-effective and scalable solution. You can use Blob storage to store content such as:</p>
+<ul>
+<li>Documents</li>
+<li>Social data such as photos, videos, music, and blogs</li>
+<li>Backups of files, computers, databases, and devices</li>
+<li>Images and text for web applications</li>
+<li>Configuration data for cloud applications</li>
+<li>Big data, such as logs and other large datasets</li>
+</ul>
+<p>Every blob is organized into a container. Containers also provide a useful way to assign security policies to groups of objects. A storage account can contain any number of containers, and a container can contain any number of blobs, up to the 500 TB capacity limit of the storage account.</p>
+<p>Blob storage offers three types of blobs, block blobs, append blobs, and page blobs (disks).</p>
+<ul>
+<li>Block blobs are optimized for streaming and storing cloud objects, and are a good choice for storing documents, media files, backups etc.</li>
+<li>Append blobs are similar to block blobs, but are optimized for append operations. An append blob can be updated only by adding a new block to the end. Append blobs are a good choice for scenarios such as logging, where new data needs to be written only to the end of the blob.</li>
+<li>Page blobs are optimized for representing IaaS disks and supporting random writes, and may be up to 1 TB in size. An Azure virtual machine network attached IaaS disk is a VHD stored as a page blob.</li>
+</ul>
+<p>For very large datasets where network constraints make uploading or downloading data to Blob storage over the wire unrealistic, you can ship a hard drive to Microsoft to import or export data directly from the data center. See <a href="storage-import-export-service" data-linktype="relative-path">Use the Microsoft Azure Import/Export Service to Transfer Data to Blob Storage</a>.</p>
+<h2 id="table-storage">Table storage</h2>
+<p>Modern applications often demand data stores with greater scalability and flexibility than previous generations of software required. Table storage offers highly available, massively scalable storage, so that your application can automatically scale to meet user demand. Table storage is Microsoft’s NoSQL key/attribute store – it has a schemaless design, making it different from traditional relational databases. With a schemaless data store, it&#39;s easy to adapt your data as the needs of your application evolve. Table storage is easy to use, so developers can create applications quickly. Access to data is fast and cost-effective for all kinds of applications.  Table storage is typically significantly lower in cost than traditional SQL for similar volumes of data.</p>
+<p>Table storage is a key-attribute store, meaning that every value in a table is stored with a typed property name. The property name can be used for filtering and specifying selection criteria. A collection of properties and their values comprise an entity. Since Table storage is schemaless, two entities in the same table can contain different collections of properties, and those properties can be of different types.</p>
+<p>You can use Table storage to store flexible datasets, such as user data for web applications, address books, device information, and any other type of metadata that your service requires.  You can store any number of entities in a table, and a storage account may contain any number of tables, up to the capacity limit of the storage account.</p>
+<p>Like Blobs and Queues, developers can manage and access Table storage using standard REST protocols, however Table storage also supports a subset of the OData protocol, simplifying advanced querying capabilities and enabling both JSON and AtomPub (XML based) formats.</p>
+<p>For today&#39;s Internet-based applications, NoSQL databases like Table storage offer a popular alternative to traditional relational databases.</p>
+<h2 id="queue-storage">Queue storage</h2>
+<p>In designing applications for scale, application components are often decoupled, so that they can scale independently. Queue storage provides a reliable messaging solution for asynchronous communication between application components, whether they are running in the cloud, on the desktop, on an on-premises server, or on a mobile device. Queue storage also supports managing asynchronous tasks and building process workflows.</p>
+<p>A storage account can contain any number of queues. A queue can contain any number of messages, up to the capacity limit of the storage account. Individual messages may be up to 64 KB in size.</p>
+<h2 id="file-storage">File storage</h2>
+<p>Azure File storage offers cloud-based SMB file shares, so that you can migrate legacy applications that rely on file shares to Azure quickly and without costly rewrites. With Azure File storage, applications running in Azure virtual machines or cloud services can mount a file share in the cloud, just as a desktop application mounts a typical SMB share. Any number of application components can then mount and access the File storage share simultaneously.</p>
+<p>Since a File storage share is a standard SMB file share, applications running in Azure can access data in the share via file system I/O APIs. Developers can therefore leverage their existing code and skills to migrate existing applications. IT Pros can use PowerShell cmdlets to create, mount, and manage File storage shares as part of the administration of Azure applications.</p>
+<p>Like the other Azure storage services, File storage exposes a REST API for accessing data in a share. On-premise applications can call the File storage REST API to access data in a file share. This way, an enterprise can choose to migrate some legacy applications to Azure and continue running others from within their own organization. Note that mounting a file share is only possible for applications running in Azure; an on-premises application may only access the file share via the REST API.</p>
+<p>Distributed applications can also use File storage to store and share useful application data and development and testing tools. For example, an application may store configuration files and diagnostic data such as logs, metrics, and crash dumps in a File storage share so that they are available to multiple virtual machines or roles. Developers and administrators can store utilities that they need to build or manage an application in a File storage share that is available to all components, rather than installing them on every virtual machine or role instance.</p>
+<h2 id="access-to-blob-table-queue-and-file-resources">Access to Blob, Table, Queue, and File resources</h2>
+<p>By default, only the storage account owner can access resources in the storage account. For the security of your data, every request made against resources in your account must be authenticated. Authentication relies on a Shared Key model. Blobs can also be configured to support anonymous authentication.</p>
+<p>Your storage account is assigned two private access keys on creation that are used for authentication. Having two keys ensures that your application remains available when you regularly regenerate the keys as a common security key management practice.</p>
+<p>If you do need to allow users controlled access to your storage resources, then you can create a shared access signature. A shared access signature (SAS) is a token that can be appended to a URL that enables delegated access to a storage resource. Anyone who possesses the token can access the resource it points to with the permissions it specifies, for the period of time that it is valid. Beginning with version 2015-04-05, Azure Storage supports two kinds of shared access signatures: service SAS and account SAS.</p>
+<p>The service SAS delegates access to a resource in just one of the storage services: the Blob, Queue, Table, or File service.</p>
+<p>An account SAS delegates access to resources in one or more of the storage services. You can delegate access to service-level operations that are not available with a service SAS. You can also delegate access to read, write, and delete operations on blob containers, tables, queues, and file shares that are not permitted with a service SAS.</p>
+<p>Finally, you can specify that a container and its blobs, or a specific blob, are available for public access. When you indicate that a container or blob is public, anyone can read it anonymously; no authentication is required.  Public containers and blobs are useful for exposing resources such as media and documents that are hosted on websites.  To decrease network latency for a global audience, you can cache blob data used by websites with the Azure CDN.</p>
+<p>See <a href="storage-dotnet-shared-access-signature-part-1" data-linktype="relative-path">Using Shared Access Signatures (SAS)</a> for more information on shared access signatures. See <a href="storage-manage-access-to-resources" data-linktype="relative-path">Manage anonymous read access to containers and blobs</a> and <a href="https://msdn.microsoft.com/library/azure/dd179428.aspx" data-linktype="external">Authentication for the Azure Storage Services</a> for more information on secure access to your storage account.</p>
+<h2 id="replication-for-durability-and-high-availability">Replication for durability and high availability</h2>
+<p>The data in your Microsoft Azure storage account is always replicated to ensure durability and high availability. Replication copies your data, either within the same data center, or to a second data center, depending on which replication option you choose. Replication protects your data and preserves your application up-time in the event of transient hardware failures. If your data is replicated to a second data center, that also protects your data against a catastrophic failure in the primary location.</p>
+<p>Replication ensures that your storage account meets the <a href="https://azure.microsoft.com/support/legal/sla/storage/" data-linktype="external">Service-Level Agreement (SLA) for Storage</a> even in the face of failures. See the SLA for information about Azure Storage guarantees for durability and availability.</p>
+<p>When you create a storage account, you can select one of the following replication options:</p>
+<ul>
+<li><p><strong>Locally redundant storage (LRS).</strong> Locally redundant storage maintains three copies of your data. LRS is replicated three times within a single data center in a single region. LRS protects your data from normal hardware failures, but not from the failure of a single data center.</p>
+<p>  LRS is offered at a discount. For maximum durability, we recommend that you use geo-redundant storage, described below.</p>
+</li>
+<li><p><strong>Zone-redundant storage (ZRS).</strong> Zone-redundant storage maintains three copies of your data. ZRS is replicated three times across two to three facilities, either within a single region or across two regions, providing higher durability than LRS. ZRS ensures that your data is durable within a single region.</p>
+<p>  ZRS provides a higher level of durability than LRS; however, for maximum durability, we recommend that you use geo-redundant storage, described below.</p>
+<div class="NOTE"><h5>Note</h5><p>ZRS is currently available only for block blobs, and is only supported for versions 2014-02-14 and later.</p>
+<p>Once you have created your storage account and selected ZRS, you cannot convert it to use to any other type of replication, or vice versa.</p>
+</div>
+</li>
+<li><p><strong>Geo-redundant storage (GRS)</strong>. GRS maintains six copies of your data. With GRS, your data is replicated three times within the primary region, and is also replicated three times in a secondary region hundreds of miles away from the primary region, providing the highest level of durability. In the event of a failure at the primary region, Azure Storage will failover to the secondary region. GRS ensures that your data is durable in two separate regions.</p>
+<p>  For information about primary and secondary pairings by region, see <a href="https://azure.microsoft.com/regions/" data-linktype="external">Azure Regions</a>.</p>
+</li>
+<li><p><strong>Read-access geo-redundant storage (RA-GRS)</strong>. Read-access geo-redundant storage replicates your data to a secondary geographic location, and also provides read access to your data in the secondary location. Read-access geo-redundant storage allows you to access your data from either the primary or the secondary location, in the event that one location becomes unavailable. Read-access geo-redundant storage is the default option for your storage account by default when you create it.</p>
+<div class="IMPORTANT"><h5>Important</h5><p>You can change how your data is replicated after your storage account has been created, unless you specified ZRS when you created the account. However, note that you may incur an additional one-time data transfer cost if you switch from LRS to GRS or RA-GRS.</p>
+</div>
+</li>
+</ul>
+<p>See <a href="storage-redundancy" data-linktype="relative-path">Azure Storage replication</a> for additional details about storage replication options.</p>
+<p>For pricing information for storage account replication, see <a href="https://azure.microsoft.com/pricing/details/storage/" data-linktype="external">Azure Storage Pricing</a>. See <a href="https://azure.microsoft.com/regions/#services" data-linktype="external">Azure Regions</a> for more information about what services are available in each region.</p>
+<p>For architectural details about durability with Azure Storage, see <a href="http://blogs.msdn.com/b/windowsazurestorage/archive/2011/11/20/windows-azure-storage-a-highly-available-cloud-storage-service-with-strong-consistency.aspx" data-linktype="external">SOSP Paper - Azure Storage: A Highly Available Cloud Storage Service with Strong Consistency</a>.</p>
+<h2 id="transferring-data-to-and-from-azure-storage">Transferring data to and from Azure Storage</h2>
+<p>You can use the AzCopy command-line utility to copy blob, file, and table data within your storage account or across storage accounts. See <a href="storage-use-azcopy" data-linktype="relative-path">Transfer data with the AzCopy Command-Line Utility</a> for more information.</p>
+<p>AzCopy is built on top of the <a href="https://www.nuget.org/packages/Microsoft.Azure.Storage.DataMovement/" data-linktype="external">Azure Data Movement Library</a>, which is currently available in preview.</p>
+<p>The Azure Import/Export service provides a way to import blob data into or export blob data from your storage account via a hard drive disk mailed to the Azure data center. For more information about the Import/Export service, see <a href="storage-import-export-service" data-linktype="relative-path">Use the Microsoft Azure Import/Export Service to Transfer Data to Blob Storage</a>.</p>
+<h2 id="pricing">Pricing</h2>
+<p>You are billed for Azure Storage usage based on your storage account. Storage costs are based on the following factors: region/location, account type, storage capacity, replication scheme, storage transactions, and data egress.</p>
+<ul>
+<li>Region refers to the geographical region in which your account is based.</li>
+<li>Account type refers to whether you are using a general-purpose storage account or a Blob storage account. With a Blob storage account, the access tier also determines the billing model for the account.</li>
+<li>Storage capacity refers to how much of your storage account allotment you are using to store data.</li>
+<li>Replication determines how many copies of your data are maintained at one time, and in what locations.</li>
+<li>Transactions refer to all read and write operations to Azure Storage.</li>
+<li>Data egress refers to data transferred out of an Azure region. When the data in your storage account is accessed by an application that is not running in the same region, you are charged for data egress. (For Azure services, you can take steps to group your data and services in the same data centers to reduce or eliminate data egress charges.)</li>
+</ul>
+<p>The <a href="https://azure.microsoft.com/pricing/details/storage/" data-linktype="external">Azure Storage Pricing</a> page provides detailed pricing information based on account type, storage capacity, replication, and transactions. The <a href="https://azure.microsoft.com/pricing/details/data-transfers/" data-linktype="external">Data Transfers Pricing Details</a> provides detailed pricing information for data egress. You can use the <a href="https://azure.microsoft.com/pricing/calculator/?scenario=data-management" data-linktype="external">Azure Storage Pricing Calculator</a> to help estimate your costs.</p>
+<h2 id="storage-apis-libraries-and-tools">Storage APIs, libraries, and tools</h2>
+<p>Azure Storage resources can be accessed by any language that can make HTTP/HTTPS requests. Additionally, Azure Storage offers programming libraries for several popular languages. These libraries simplify many aspects of working with Azure Storage by handling details such as synchronous and asynchronous invocation, batching of operations, exception management, automatic retries, operational behavior and so forth. Libraries are currently available for the following languages and platforms, with others in the pipeline:</p>
+<h3 id="azure-storage-data-services">Azure Storage data services</h3>
+<ul>
+<li><a href="http://msdn.microsoft.com/library/azure/dd179355.aspx" data-linktype="external">Storage Services REST API</a></li>
+<li><a href="https://www.nuget.org/packages/WindowsAzure.Storage/" data-linktype="external">Storage Client Library for .NET, Windows Phone, and Windows Runtime</a></li>
+<li><a href="https://github.com/Azure/azure-storage-cpp" data-linktype="external">Storage Client Library for C++</a></li>
+<li><a href="https://azure.microsoft.com/develop/java/" data-linktype="external">Storage Client Library for Java/Android</a></li>
+<li><a href="http://dl.windowsazure.com/nodestoragedocs/index.html" data-linktype="external">Storage Client Library for Node.js</a></li>
+<li><a href="https://azure.microsoft.com/develop/php/" data-linktype="external">Storage Client Library for PHP</a></li>
+<li><a href="https://azure.microsoft.com/develop/ruby/" data-linktype="external">Storage Client Library for Ruby</a></li>
+<li><a href="https://azure.microsoft.com/develop/python/" data-linktype="external">Storage Client Library for Python</a></li>
+<li><a href="https://msdn.microsoft.com/library/azure/mt269418.aspx" data-linktype="external">Storage Cmdlets for PowerShell 1.0</a></li>
+</ul>
+<h3 id="azure-storage-management-services">Azure Storage management services</h3>
+<ul>
+<li><a href="/en-us/rest/api/storagerp/" data-linktype="absolute-path">Storage Resource Provider REST API Reference</a></li>
+<li><a href="/en-us/dotnet/api/microsoft.azure.management.storage" data-linktype="absolute-path">Storage Resource Provider Client Library for .NET</a></li>
+<li><a href="/en-us/powershell/storage/" data-linktype="absolute-path">Storage Resource Provider Cmdlets for PowerShell 1.0</a></li>
+<li><a href="https://msdn.microsoft.com/library/azure/ee460790.aspx" data-linktype="external">Storage Service Management REST API (Classic)</a></li>
+</ul>
+<h3 id="azure-storage-data-movement-services">Azure Storage data movement services</h3>
+<ul>
+<li><a href="storage-import-export-service" data-linktype="relative-path">Storage Import/Export Service REST API</a></li>
+<li><a href="https://www.nuget.org/packages/Microsoft.Azure.Storage.DataMovement/" data-linktype="external">Storage Data Movement Client Library for .NET</a></li>
+</ul>
+<h3 id="tools-and-utilities">Tools and utilities</h3>
+<ul>
+<li><a href="http://go.microsoft.com/fwlink/?LinkID=822673&amp;clcid=0x409" data-linktype="external">Azure Storage Explorer</a></li>
+<li><a href="storage-explorers" data-linktype="relative-path">Azure Storage Client Tools</a></li>
+<li><a href="https://azure.microsoft.com/tools/" data-linktype="external">Azure SDKs and Tools</a></li>
+<li><a href="http://www.microsoft.com/download/details.aspx?id=43709" data-linktype="external">Azure Storage Emulator</a></li>
+<li><a href="/en-us/powershell/azureps-cmdlets-docs" data-linktype="absolute-path">Azure PowerShell</a></li>
+<li><a href="http://aka.ms/downloadazcopy" data-linktype="external">AzCopy Command-Line Utility</a></li>
+</ul>
+<h2 id="next-steps">Next steps</h2>
+<p>To learn more about Azure Storage, explore these resources:</p>
+<h3 id="documentation">Documentation</h3>
+<ul>
+<li><a href="https://azure.microsoft.com/documentation/services/storage/" data-linktype="external">Azure Storage Documentation</a></li>
+<li><a href="storage-create-storage-account" data-linktype="relative-path">Create a storage account</a></li>
+<li><a href="storage-getting-started-guide" data-linktype="relative-path">Get started with Azure Storage in five minutes</a></li>
+</ul>
+<h3 id="for-administrators">For administrators</h3>
+<ul>
+<li><a href="storage-powershell-guide-full" data-linktype="relative-path">Using Azure PowerShell with Azure Storage</a></li>
+<li><a href="storage-azure-cli" data-linktype="relative-path">Using Azure CLI with Azure Storage</a></li>
+</ul>
+<h3 id="for-net-developers">For .NET developers</h3>
+<ul>
+<li><a href="storage-dotnet-how-to-use-blobs" data-linktype="relative-path">Get started with Azure Blob storage using .NET</a></li>
+<li><a href="storage-dotnet-how-to-use-tables" data-linktype="relative-path">Get started with Azure Table storage using .NET</a></li>
+<li><a href="storage-dotnet-how-to-use-queues" data-linktype="relative-path">Get started with Azure Queue storage using .NET</a></li>
+<li><a href="storage-dotnet-how-to-use-files" data-linktype="relative-path">Get started with Azure File storage on Windows</a></li>
+</ul>
+<h3 id="for-javaandroid-developers">For Java/Android developers</h3>
+<ul>
+<li><a href="storage-java-how-to-use-blob-storage" data-linktype="relative-path">How to use Blob storage from Java</a></li>
+<li><a href="storage-java-how-to-use-table-storage" data-linktype="relative-path">How to use Table storage from Java</a></li>
+<li><a href="storage-java-how-to-use-queue-storage" data-linktype="relative-path">How to use Queue storage from Java</a></li>
+<li><a href="storage-java-how-to-use-file-storage" data-linktype="relative-path">How to use File storage from Java</a></li>
+</ul>
+<h3 id="for-nodejs-developers">For Node.js developers</h3>
+<ul>
+<li><a href="storage-nodejs-how-to-use-blob-storage" data-linktype="relative-path">How to use Blob storage from Node.js</a></li>
+<li><a href="storage-nodejs-how-to-use-table-storage" data-linktype="relative-path">How to use Table storage from Node.js</a></li>
+<li><a href="storage-nodejs-how-to-use-queues" data-linktype="relative-path">How to use Queue storage from Node.js</a></li>
+</ul>
+<h3 id="for-php-developers">For PHP developers</h3>
+<ul>
+<li><a href="storage-php-how-to-use-blobs" data-linktype="relative-path">How to use Blob storage from PHP</a></li>
+<li><a href="storage-php-how-to-use-table-storage" data-linktype="relative-path">How to use Table storage from PHP</a></li>
+<li><a href="storage-php-how-to-use-queues" data-linktype="relative-path">How to use Queue storage from PHP</a></li>
+</ul>
+<h3 id="for-ruby-developers">For Ruby developers</h3>
+<ul>
+<li><a href="storage-ruby-how-to-use-blob-storage" data-linktype="relative-path">How to use Blob storage from Ruby</a></li>
+<li><a href="storage-ruby-how-to-use-table-storage" data-linktype="relative-path">How to use Table storage from Ruby</a></li>
+<li><a href="storage-ruby-how-to-use-queue-storage" data-linktype="relative-path">How to use Queue storage from Ruby</a></li>
+</ul>
+<h3 id="for-python-developers">For Python developers</h3>
+<ul>
+<li><a href="storage-python-how-to-use-blob-storage" data-linktype="relative-path">How to use Blob storage from Python</a></li>
+<li><a href="storage-python-how-to-use-table-storage" data-linktype="relative-path">How to use Table storage from Python</a></li>
+<li><a href="storage-python-how-to-use-queue-storage" data-linktype="relative-path">How to use Queue storage from Python</a></li>
+<li><a href="storage-python-how-to-use-file-storage" data-linktype="relative-path">How to use File storage from Python</a></li>
+</ul>
+</div></div>
+
+
+						<div id="comments-container" ms.cmpgrp="comments" role="form"></div>
+				</div>
+		</main>
+
+		<div class="pageActions">
+			<div id="page-actions" ms.cmpgrp="pageactions" role="complementary">
+				<div id="page-actions-content">
+					<ul class="action-list">
+								<li>
+									<a href="#comments-container" id="comments-link" ms.cmpnm="comments" data-linktype="self-bookmark">
+										<i class="icon icon-comments"></i>Comments									</a>
+								</li>
+
+									<li id="contenteditbtn">
+										<a href="https://github.com/Microsoft/azure-docs/blob/master/articles/storage/storage-introduction.md" title="Edit This Document" ms.cmpnm="edit" data-linktype="external">
+											<i class="icon icon-editor"></i>Edit										</a>
+									</li>
+						<li>
+							<a href="#" class="sharebutton" title="Share This Document" ms.cmpnm="share" data-linktype="relative-path"><i class="icon icon-share"></i>Share</a>
+							<div class="share-container">
+									<div><a href="" class="share-twitter" ms.cmpnm="twitter"><i class="icon icon-twitter"></i>Twitter</a></div>
+									<div><a href="" class="share-facebook" ms.cmpnm="facebook"><i class="icon icon-facebook"></i>Facebook</a></div>
+							</div>
+						</li>
+						<li class="typeSep">|</li>
+						<li>
+							<label for="theme-selector">Theme</label>
+							<select id="theme-selector">
+								<option value="" class="removedOnload">
+								<option value="">Light
+								<option value="theme_night">Dark
+							</select>
+						</li>
+					</ul>
+
+					<nav id="side-doc-outline" class="doc-outline" ms.cmpgrp="intopic toc" role="navigation" aria-label="On page navigation">
+						<h3>In this article</h3>
+					</nav>
+
+				</div>
+			</div>		
+		</div>
+
+		<ul class="breadcrumbs" ms.cmpgrp="breadcrumb" role="navigation" aria-label="breadcrumb"></ul>
+
+		<div class="sidebar" id="sidebar" ms.cmpgrp="left toc" role="navigation" aria-label="main navigation" lang="en-us" dir="ltr">					
+			<div id="sidebarContent">
+				<div class="filterHolder">
+				</div>
+				<nav class="toc"></nav> 
+				<div class="pdfDownloadHolder"></div>
+			</div>
+			<div class="tocSpace"></div>
+		</div>
+
+		<div id="menu-nav" class="dropdown-container" lang="en-us" dir="ltr">
+			<div class="dropdown dropdown-full mobilenavi">
+				<select>
+				</select>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="openFeedbackContainer" class="openfeedback-container footer-layout"></div>
+	
+	<div class="container footerContainer">
+		<div id="footerPlaceholder"></div>
+	</div>
+
+	<script src="../_themes/javascript/81fdb4f4b70b2154ebdd.conceptual.js"></script>
+</body>
+</html>
