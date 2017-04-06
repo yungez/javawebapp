@@ -3,6 +3,7 @@ package com.yungez.testweb2;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -35,7 +36,7 @@ import org.json.JSONObject;
 @Path("/file")
 public class fileOperation {
 	
-	private static final String UPLOAD_FOLDER = new File(".").getAbsolutePath();
+	private static final String UPLOAD_FOLDER = (new File(".")).getAbsolutePath() + File.separator + "temp";
 	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -53,7 +54,8 @@ public class fileOperation {
 			return Response.status(500).entity(se.getMessage()).build();
 		}
 		
-		String destFileName = UPLOAD_FOLDER + File.separator + fileDetail.getFileName();
+		long randomNum = ThreadLocalRandom.current().nextLong(1, 1000000 + 1);
+		String destFileName = UPLOAD_FOLDER + File.separator + fileDetail.getFileName() + "_" + randomNum;
 		try {
 			saveToFile(uploadedInputStream, destFileName);
 		} catch (IOException e) {
@@ -98,7 +100,7 @@ public class fileOperation {
 		int read = 0;
 		byte[] bytes = new byte[1024];
 		
-		out = new FileOutputStream(new File(targetFileName));
+		out = new FileOutputStream(new File(targetFileName), false);
 		while ((read = stream.read(bytes)) != -1) {
 			out.write(bytes,0, read);
 		}
