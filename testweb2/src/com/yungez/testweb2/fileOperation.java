@@ -35,7 +35,7 @@ import org.json.JSONObject;
 @Path("/file")
 public class fileOperation {
 	
-	private static final String UPLOAD_FOLDER = "c:/uploadedfiles/";
+	private static final String UPLOAD_FOLDER = new File(".").getAbsolutePath();
 	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -53,7 +53,7 @@ public class fileOperation {
 			return Response.status(500).entity(se.getMessage()).build();
 		}
 		
-		String destFileName = UPLOAD_FOLDER + fileDetail.getFileName();
+		String destFileName = UPLOAD_FOLDER + File.separator + fileDetail.getFileName();
 		try {
 			saveToFile(uploadedInputStream, destFileName);
 		} catch (IOException e) {
