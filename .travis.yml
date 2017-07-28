@@ -8,9 +8,12 @@ cache:
     - $HOME/.m2
 
 python:
-  - "3.5"
+  - "3.4"
 
 before_install:
-  - sudo pip install azure-cli
+  - sudo apt-get -y install python3-pip python-dev
+  - python3 -V
+  - pip3 -V
+  - sudo pip3 install azure-cli
 
 script: "az -v"
