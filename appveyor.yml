@@ -15,7 +15,7 @@ install:
   - msiexec.exe /i "C:\Azure Cosmos DB.Emulator.msi" /quiet /qn
   - cmd: dir "C:\Program Files\Azure Cosmos DB Emulator"
   # export cert to Java cert store
-  - ps: cd cert:\localmachine\root; Get-ChildItem | Format-Table Subject, Thumbprint, FriendlyName; export-Certificate -filepath ${USERPROFILE}\documentdb.cer -cert 2c68332f680386788c4a5d5077264bc5a3bc38b9 -type CERT -NoClobber
+  - ps: cd cert:\localmachine\root; Get-ChildItem | Format-Table Thumbprint, FriendlyName; export-Certificate -filepath ${USERPROFILE}\documentdb.cer -cert 2c68332f680386788c4a5d5077264bc5a3bc38b9 -type CERT -NoClobber
   - cmd: cd "C:\Program Files\Java\jdk1.8.0\jre\lib\security"
   - cmd: certutil "-encode %USERPROFILE%\documentdb.cer documentemulatordb.cer"
   - cmd: keytool -keystore cacerts -importcert -alias documentdbeumlatorcert -file .\documentemulatordb.cer
