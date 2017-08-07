@@ -15,6 +15,7 @@ install:
   # - msiexec.exe /i "C:\Azure Cosmos DB.Emulator.msi" /qn
   - ps: Start-Process "msiexec.exe" -ArgumentList "/i","C:\AzureCosmosDB.Emulator.msi","/qn" -Wait
   - cmd: dir "C:\Program Files\Azure Cosmos DB Emulator"
+  - cmd: dir "%LOCALAPPDATA%\Cosmos*"
   
   # open 8081 port
   - netsh: advfirewall firewall add rule name="documentdb emulator 8081" dir=in action=allow protocol=TCP localport=8081
