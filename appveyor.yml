@@ -11,7 +11,8 @@ environment:
 install:
   - cmd: copy "C:\Program Files (x86)\Apache\Maven\bin\mvn.cmd" "C:\Program Files (x86)\Apache\Maven\bin\mvn.bat"
   - cmd: dir "C:\Program Files\DocumentDB Emulator"
-  - cmd: start /b "C:\Program Files\DocumentDB Emulator\DocumentDB.Emulator.exe"
+  - cmd: call "C:\Program Files\DocumentDB Emulator\DocumentDB.Emulator.exe" /?
+  - cmd: start "C:\Program Files\DocumentDB Emulator\DocumentDB.Emulator.exe"
 
 build_script:
   - mvn clean install -P integration-test-emulator -B -V
