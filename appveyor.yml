@@ -10,14 +10,15 @@ environment:
 
 install:
   - cmd: copy "C:\Program Files (x86)\Apache\Maven\bin\mvn.cmd" "C:\Program Files (x86)\Apache\Maven\bin\mvn.bat"
-  - cmd: dir "C:\Program Files\DocumentDB Emulator"
-  - ps: Get-ChildItem |Format-Table Sbuject, FriendlyName, Thumbprint
+  # Install Cosmos DB Emulator
+  - ps: Start-FileDownload 'https://aka.ms/cosmosdb-emulator' -FileName 'C:\Downloads\Azure Cosmos DB.Emulator.msi'
+  - msiexec.exe /i 'C:\Downloads\Azure Cosmos DB.Emulator.msi' /quiet /qn /log install.log
   - ps: cd cert:\localmachine\my; export-Certificate -filepath ${USERPROFILE}\documentdb.cer -cert 2c68332f680386788c4a5d5077264bc5a3bc38b9 -type CERT -NoClobber
   - cmd: cd "C:\Program Files\Java\jdk1.8.0\jre\lib\security"
   - cmd: certutil "-encode %USERPROFILE%\documentdb.cer documentemulatordb.cer"
   - cmd: keytool -keystore cacerts -importcert -alias documentdbeumlatorcert -file .\documentemulatordb.cer
   - ps: >-
-      "${env:ProgramFiles}\DocumentDB Emulator\DocumentDB.Emulator.exe"
+      "${env:ProgramFiles}\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe"
 
 build_script:
   - mvn clean install -P integration-test-emulator -B -V
