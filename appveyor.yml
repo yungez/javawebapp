@@ -12,7 +12,7 @@ install:
   - cmd: copy "C:\Program Files (x86)\Apache\Maven\bin\mvn.cmd" "C:\Program Files (x86)\Apache\Maven\bin\mvn.bat"
   # Install Cosmos DB Emulator
   - ps: Start-FileDownload 'https://aka.ms/cosmosdb-emulator' -FileName 'C:\Azure Cosmos DB.Emulator.msi'
-  - msiexec.exe /i 'C:\Azure Cosmos DB.Emulator.msi' /quiet /qn /log install.log
+  - msiexec.exe /i 'C:\Azure Cosmos DB.Emulator.msi' /quiet /qn
   # export cert to Java cert store
   - ps: cd cert:\localmachine\my; export-Certificate -filepath ${USERPROFILE}\documentdb.cer -cert 2c68332f680386788c4a5d5077264bc5a3bc38b9 -type CERT -NoClobber
   - cmd: cd "C:\Program Files\Java\jdk1.8.0\jre\lib\security"
@@ -23,4 +23,4 @@ install:
       "${env:ProgramFiles}\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe"
 
 build_script:
-  - mvn clean install -P integration-test-emulator -B -V
+  - mvn cobertura:cobertura-integration-test -P integration-test-emulator -B -V
