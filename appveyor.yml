@@ -27,9 +27,7 @@ install:
   #- cmd: cd "C:\Program Files\Java\jdk1.8.0\jre\lib\security"
   #- cmd: certutil "-encode %USERPROFILE%\documentdb.cer documentemulatordb.cer"
   #- cmd: keytool -keystore cacerts -importcert -alias documentdbeumlatorcert -file .\documentemulatordb.cer
-  - ps: $pass = ConvertTo-SecureString -String "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==" -Force -AsPlainText
-  - ps: $cert = Get-ChildItem cert:\LocalMachine\My | Where-Object {$_.FriendlyName -eq "DocumentDbEmulatorCertificate" }
-  - ps: $output = Export-PfxCertificate -Cert $cert -FilePath c:\CosmosDBEmulatorCert.pfx
+  - ps: $pass = ConvertTo-SecureString -String "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==" -Force -AsPlainText | $cert = Get-ChildItem cert:\LocalMachine\My | Where-Object {$_.FriendlyName -eq "DocumentDbEmulatorCertificate" }\ | $output = Export-PfxCertificate -Cert $cert -FilePath c:\CosmosDBEmulatorCert.pfx
   - ps: $output = Import-PfxCertificate -FilePath .\CosmosDBEmulatorCert.pfx cert:\localMachine\my | Import-PfxCertificate -FilePath .\CosmosDBEmulatorCert.pfx cert:\localMachine\root
   - ps: Get-ChildItem cert:\LocalMachine\My | Format-Table Thumbprint, FriendlyName
   
