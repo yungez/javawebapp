@@ -19,9 +19,8 @@ install:
   # Install Cosmos DB Emulator
   - ps: Start-FileDownload 'https://aka.ms/cosmosdb-emulator' -FileName 'C:\AzureCosmosDB.Emulator.msi'
   # - msiexec.exe /i "C:\Azure Cosmos DB.Emulator.msi" /qn
-  - ps: Start-Process "msiexec.exe" -ArgumentList "/i","C:\AzureCosmosDB.Emulator.msi","/qn" -Wait
+  - ps: -Command $ErrorActionPreference = "Stop"; Start-Process "msiexec.exe" -ArgumentList "/i","C:\AzureCosmosDB.Emulator.msi","/qn" -Wait
   - cmd: dir "C:\Program Files\Azure Cosmos DB Emulator"
-  - cmd: dir "%LOCALAPPDATA%\Cosmos*"
   
   # open 8081 port
   - netsh: advfirewall firewall add rule name="documentdb emulator 8081" dir=in action=allow protocol=TCP localport=8081
@@ -34,7 +33,7 @@ install:
   #- cmd: cd "C:\Program Files\Java\jdk1.8.0\jre\lib\security"
   #- cmd: certutil "-encode %USERPROFILE%\documentdb.cer documentemulatordb.cer"
   #- cmd: keytool -keystore cacerts -importcert -alias documentdbeumlatorcert -file .\documentemulatordb.cer
-  - ps: $pass = ConvertTo-SecureString -String "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==" -Force -AsPlainText | $cert = Get-ChildItem cert:\LocalMachine\My | Where-Object {$_.FriendlyName -eq "DocumentDbEmulatorCertificate" }\ | $output = Export-PfxCertificate -Cert $cert -FilePath c:\CosmosDBEmulatorCert.pfx
+  - ps: $pass = ConvertTo-SecureString -String "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==" -Force -AsPlainText | Get-ChildItem cert:\LocalMachine\My | Where-Object {$_.FriendlyName -eq "DocumentDbEmulatorCertificate" } | $output = Export-PfxCertificate -Cert $cert -FilePath c:\CosmosDBEmulatorCert.pfx
   - ps: $output = Import-PfxCertificate -FilePath .\CosmosDBEmulatorCert.pfx cert:\localMachine\my | Import-PfxCertificate -FilePath .\CosmosDBEmulatorCert.pfx cert:\localMachine\root
   - ps: Get-ChildItem cert:\LocalMachine\My | Format-Table Thumbprint, FriendlyName
   
