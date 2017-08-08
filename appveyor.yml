@@ -20,7 +20,7 @@ install:
   # 0. share c driver between docker
   - cmd: net share "c=c:"
   # 1. starter docker
-  - cmd: start /b "C:\Program Files\Docker\dockerd.exe"
+  - start: "C:\Program Files\Docker\dockerd.exe"
   # 2. starter emulator docker
   - cmd: dockerdocker pull microsoft/azure-cosmosdb-emulator
   - cmd: md %LOCALAPPDATA%\CosmosDBEmulatorCert 2>nul
