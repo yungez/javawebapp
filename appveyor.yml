@@ -32,9 +32,9 @@ install:
   # 4. export cert to java cert store
   - ps: Get-ChildItem cert:\LocalMachine\My | Format-Table Thumbprint, FriendlyName
   # export cert to Java cert store
-  - ps: cd cert:\localmachine\my; Get-ChildItem | Format-Table Thumbprint, FriendlyName; export-Certificate -filepath ${USERPROFILE}\documentdb.cer -cert C8CCE942A1CF161667ED4C034DA36C004B2D0D7C -type CERT -NoClobber
+  - ps: $cert = Get-ChildItem  cert:\LocalMachine\my | Where-Object { $_.FriendlyName -eq "DocumentDbEmulatorCertificate"}; export-Certificate -filepath c:\documentdb.cer -cert ${cert} -type CERT -NoClobber
   - cmd: cd "C:\Program Files\Java\jdk1.8.0\jre\lib\security"
-  - cmd: certutil "-encode %USERPROFILE%\documentdb.cer documentemulatordb.cer"
+  - cmd: certutil "-encode c:\documentdb.cer documentemulatordb.cer"
   - cmd: keytool -keystore cacerts -importcert -alias documentdbeumlatorcert -file .\documentemulatordb.cer
   
   
