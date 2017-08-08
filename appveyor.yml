@@ -16,26 +16,25 @@ on_finish:
 
 install:
   - cmd: copy "C:\Program Files (x86)\Apache\Maven\bin\mvn.cmd" "C:\Program Files (x86)\Apache\Maven\bin\mvn.bat"
-  # Install Cosmos DB Emulator
-  - ps: Start-FileDownload 'https://aka.ms/cosmosdb-emulator' -FileName 'C:\AzureCosmosDB.Emulator.msi'
-  # - msiexec.exe /i "C:\Azure Cosmos DB.Emulator.msi" /qn
-  - ps: -Command $ErrorActionPreference = "Stop"; Start-Process "msiexec.exe" -ArgumentList "/i","C:\AzureCosmosDB.Emulator.msi","/qn" -Wait
-  - cmd: dir "C:\Program Files\Azure Cosmos DB Emulator"
   
-  # open 8081 port
-  - netsh: advfirewall firewall add rule name="documentdb emulator 8081" dir=in action=allow protocol=TCP localport=8081
-  - netsh: advfirewall firewall add rule name="documentdb emulator 8081" dir=out action=allow protocol=TCP localport=8081
-  
-  - ps: >-
-      "${env:ProgramFiles}\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe /noui /Key=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw=="
-  # export cert to Java cert store
-  #- ps: cd cert:\localmachine\my; Get-ChildItem | Format-Table Thumbprint, FriendlyName; export-Certificate -filepath ${USERPROFILE}\documentdb.cer -cert 2c68332f680386788c4a5d5077264bc5a3bc38b9 -type CERT -NoClobber
-  #- cmd: cd "C:\Program Files\Java\jdk1.8.0\jre\lib\security"
-  #- cmd: certutil "-encode %USERPROFILE%\documentdb.cer documentemulatordb.cer"
-  #- cmd: keytool -keystore cacerts -importcert -alias documentdbeumlatorcert -file .\documentemulatordb.cer
-  - ps: $pass = ConvertTo-SecureString -String "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==" -Force -AsPlainText | Get-ChildItem cert:\LocalMachine\My | Where-Object {$_.FriendlyName -eq "DocumentDbEmulatorCertificate" } | $output = Export-PfxCertificate -Cert $cert -FilePath c:\CosmosDBEmulatorCert.pfx
-  - ps: $output = Import-PfxCertificate -FilePath .\CosmosDBEmulatorCert.pfx cert:\localMachine\my | Import-PfxCertificate -FilePath .\CosmosDBEmulatorCert.pfx cert:\localMachine\root
+  # 0. share c driver between docker
+  - cmd: net share c=c:
+  # 1. starter docker
+  - cmd: start /b "C:\Program Files\Docker\dockerd.exe"
+  # 2. starter emulator docker
+  - cmd: dockerdocker pull microsoft/azure-cosmosdb-emulator
+  - cmd: md %LOCALAPPDATA%\CosmosDBEmulatorCert 2>nul
+  - cmd: docker run -v %LOCALAPPDATA%\CosmosDBEmulatorCert:c:\CosmosDBEmulator\CosmosDBEmulatorCert -P -t -i microsoft/azure-cosmosdb-emulator 
+  # 3. import cert
+  - ps: cd C:\Users\appveyor\AppData\Local\CosmosDBEmulatorCert; .\importcert.ps1
+  # 4. export cert to java cert store
   - ps: Get-ChildItem cert:\LocalMachine\My | Format-Table Thumbprint, FriendlyName
+  # export cert to Java cert store
+  - ps: cd cert:\localmachine\my; Get-ChildItem | Format-Table Thumbprint, FriendlyName; export-Certificate -filepath ${USERPROFILE}\documentdb.cer -cert C8CCE942A1CF161667ED4C034DA36C004B2D0D7C -type CERT -NoClobber
+  - cmd: cd "C:\Program Files\Java\jdk1.8.0\jre\lib\security"
+  - cmd: certutil "-encode %USERPROFILE%\documentdb.cer documentemulatordb.cer"
+  - cmd: keytool -keystore cacerts -importcert -alias documentdbeumlatorcert -file .\documentemulatordb.cer
+  
   
 
 build_script:
