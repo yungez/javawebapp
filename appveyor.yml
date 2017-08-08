@@ -24,7 +24,7 @@ install:
   # 2. starter emulator docker
   - cmd: docker pull microsoft/azure-cosmosdb-emulator
   - cmd: md %LOCALAPPDATA%\CosmosDBEmulatorCert 2>nul
-  - ps: Start-Process "docker run -v %LOCALAPPDATA%\CosmosDBEmulatorCert:c:\CosmosDBEmulator\CosmosDBEmulatorCert -P -t -i microsoft/azure-cosmosdb-emulator" -Wait
+  - ps: Start-Process "C:\Program Files\Docker\docker.exe" -ArgumentList "run","-v","%LOCALAPPDATA%\CosmosDBEmulatorCert:c:\CosmosDBEmulator\CosmosDBEmulatorCert","-P","-t","-i","microsoft/azure-cosmosdb-emulator" -Wait
   # 3. import cert
   - ps: cd C:\Users\appveyor\AppData\Local\CosmosDBEmulatorCert; .\importcert.ps1
   # 4. export cert to java cert store
