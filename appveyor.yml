@@ -18,7 +18,7 @@ install:
   - cmd: copy "C:\Program Files (x86)\Apache\Maven\bin\mvn.cmd" "C:\Program Files (x86)\Apache\Maven\bin\mvn.bat"
   
   # 0. share c driver between docker
-  - cmd: net share c=c:
+  - cmd: net share "c=c:"
   # 1. starter docker
   - cmd: start /b "C:\Program Files\Docker\dockerd.exe"
   # 2. starter emulator docker
