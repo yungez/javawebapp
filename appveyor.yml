@@ -21,11 +21,12 @@ install:
   #- ps: Start-Process -NoNewWindow "C:\Program Files\Docker\docker.exe" -ArgumentList "run","-v","%LOCALAPPDATA%\CosmosDBEmulatorCert:c:\CosmosDBEmulator\CosmosDBEmulatorCert","-P","-t","-i","microsoft/azure-cosmosdb-emulator" -Wait
   - cmd: docker run -d -v %LOCALAPPDATA%\CosmosDBEmulatorCert:c:\CosmosDBEmulator\CosmosDBEmulatorCert -p 8081:8081 -t -i microsoft/azure-cosmosdb-emulator >> dockerid.txt
   - cmd: set /P dockerid=<dockerid.txt
-  - cmd: timeout 180
+  - cmd: timeout 150
   - cmd: docker logs %dockerid% >> dockerlog.txt
   - ps: $substtring = type dockerlog.txt |where { $_ -match "\bhttps://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:8081/$" } | foreach { $matches[0] }; Write-Host $substtring; $substtring | Out-File -filepath documentdburi.txt
   - cmd: more documentdburi.txt
-  - cmd: set /P DOCUMENTDB_URI=<documentdburi.txt
+  - cmd: set /P DOCUMENTDB_URI=< documentdburi.txt
+  - cmd: echo %DOCUMENTDB_URI%
   # 3. import cert
   - ps: cd C:\Users\appveyor\AppData\Local\CosmosDBEmulatorCert; .\importcert.ps1
   # 4. export cert to java cert store
@@ -33,11 +34,10 @@ install:
   # export cert to Java cert store
   - ps: $cert = Get-ChildItem  cert:\LocalMachine\my | Where-Object { $_.FriendlyName -eq "DocumentDbEmulatorCertificate"}; export-Certificate -filepath c:\documentdb.cer -cert ${cert} -type CERT -NoClobber
   - cmd: cd "C:\Program Files\Java\jdk1.8.0\jre\lib\security"
-  - cmd: dir .
   - cmd: certutil -encode c:\documentdb.cer documentemulatordb.cer
   - cmd: keytool -keystore cacerts -importcert -alias documentdbeumlatorcert -file .\documentemulatordb.cer -storepass changeit -trustcacerts -noprompt
   
   
 
 build_script:
-  - set && mvn clean package -B -V
+  - echo %DOCUMENTDB_URI% && set && mvn clean package -B -V
