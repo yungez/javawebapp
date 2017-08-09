@@ -23,8 +23,7 @@ install:
   - cmd: set /P dockerid=<dockerid.txt
   - cmd: timeout 240
   - cmd: docker logs %dockerid% >> dockerlog.txt
-  - ps: $substtring = type dockerlog.txt |where { $_ -match "\bhttps://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:8081/$" } | foreach { $matches[0] }; Write-Host $substtring; [Environment]::SetEnvironmentVariable("DOCUMENTDBURI", $substtring, "Machine")
-  - cmd: set %DOCUMENTDBURI%
+  - ps: $substtring = type dockerlog.txt |where { $_ -match "\bhttps://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:8081/$" } | foreach { $matches[0] }; SETX DOCUMENTDB_URI $substtring
   # 3. import cert
   - ps: cd C:\Users\appveyor\AppData\Local\CosmosDBEmulatorCert; .\importcert.ps1
   # 4. export cert to java cert store
@@ -39,4 +38,4 @@ install:
   
 
 build_script:
-  - mvn cobertura:cobertura-integration-test -P integration-test-emulator -B -V
+  - set && mvn cobertura:cobertura-integration-test -P integration-test-emulator -B -V
