@@ -23,7 +23,8 @@ install:
   - cmd: set /P dockerid=<dockerid.txt
   - cmd: timeout 180
   - cmd: docker logs %dockerid% >> dockerlog.txt
-  - ps: $substtring = type dockerlog.txt |where { $_ -match "\bhttps://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:8081/$" } | foreach { $matches[0] };$substtring | Out-File documentdburi.txt
+  - ps: $substtring = type dockerlog.txt |where { $_ -match "\bhttps://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:8081/$" } | foreach { $matches[0] }; Write-Host $substtring; $substtring | Out-File -filepath documentdburi.txt
+  - cmd: more documentdburi.txt
   - cmd: set /P DOCUMENTDB_URI=<documentdburi.txt
   # 3. import cert
   - ps: cd C:\Users\appveyor\AppData\Local\CosmosDBEmulatorCert; .\importcert.ps1
