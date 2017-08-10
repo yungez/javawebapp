@@ -13,4 +13,6 @@ install:
 
 
 build_script:
-  - for /f %f in ('dir /s /b *.java') do echo %f
+
+after_build:
+  -cmd: for /f %f in ('dir /s /b *.java') do echo %f
