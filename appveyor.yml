@@ -10,10 +10,11 @@ environment:
 
 install:
   - cmd: copy "C:\Program Files (x86)\Apache\Maven\bin\mvn.cmd" "C:\Program Files (x86)\Apache\Maven\bin\mvn.bat"
+  - pythom -m pip install codecov
 
 
 build_script:
   - mvn -v
 
 after_build:
-  - ps: Get-ChildItem -Path . -Recurse -File -Filter *.java | Foreach-Object { Write-Host $_.FullName }
+  - ps: Get-ChildItem -Path . -Recurse -File -Filter *.java | Foreach-Object { codecov -f $_.FullName -t xxxx}
