@@ -10,7 +10,7 @@ environment:
 
 install:
   - cmd: copy "C:\Program Files (x86)\Apache\Maven\bin\mvn.cmd" "C:\Program Files (x86)\Apache\Maven\bin\mvn.bat"
-  - pythom -m pip install codecov
+  - python -m pip install codecov
 
 
 build_script:
