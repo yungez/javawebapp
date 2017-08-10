@@ -16,4 +16,4 @@ build_script:
   - mvn -v
 
 after_build:
-  -cmd: for /f %f in ('dir /s /b *.java') do echo %f
+  - cmd: for /f %f in ('dir /s /b *.java') do echo %f
